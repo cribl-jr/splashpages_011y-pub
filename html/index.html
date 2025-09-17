@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>O11Y</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384‐ENjdO4Dr2bkBIFxQpeo2XwOFT54HGVEi6qhCbQ5YqFfLv5zG5nT0siwk3yZ6qK5K"
+    crossorigin="anonymous"
+  />
+
+  <style>
+    /* ──────────────────────────────────────────────────────────────────────
+       CSS Reset / Base Styles
+       ────────────────────────────────────────────────────────────────────── */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+      color: #333;
+      background-color: #fafafa;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────
+       Layout Container: uses CSS Grid
+       ────────────────────────────────────────────────────────────────────── */
+    main.page-layout {
+      display: grid;
+      grid-template-areas:
+        "hero  hero  hero"
+        "feat1 feat2 feat3"
+        "sec   sec   side";
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: auto;
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    /* Grid Areas */
+    .hero {
+      grid-area: hero;
+    }
+    .feature1 {
+      grid-area: feat1;
+    }
+    .feature2 {
+      grid-area: feat2;
+    }
+    .feature3 {
+      grid-area: feat3;
+    }
+    .secondary {
+      grid-area: sec;
+    }
+    .sidebar {
+      grid-area: side;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────
+       Responsive Grid Breakpoints
+       ────────────────────────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      main.page-layout {
+        grid-template-areas:
+          "hero  hero"
+          "feat1 feat2"
+          "feat3 feat3"
+          "sec   sec"
+          "side  side";
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      main.page-layout {
+        grid-template-areas:
+          "hero"
+          "feat1"
+          "feat2"
+          "feat3"
+          "sec"
+          "side";
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      /* Reduce padding on mobile */
+      main.page-layout {
+        padding: 1rem;
+      }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────
+       Section Styling (with background-image)
+       ────────────────────────────────────────────────────────────────────── */
+
+    /* HERO SECTION */
+    .hero {
+      position: relative;
+      background-image: url('images/hero-logs.jpg'); /* ← Replace with your hero image URL */
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.75rem;
+      text-align: center;
+    }
+    .hero .overlay-text {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+    }
+
+    /* FEATURE CARDS */
+    .feature-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: box-shadow 0.2s ease;
+    }
+    .feature-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .feature-image {
+      background-size: cover;
+      background-position: center;
+      height: 180px;
+    }
+    .feature1 .feature-image {
+      background-image: url('/images/feature1.jpg'); /* ← Replace with your image URL */
+    }
+    .feature2 .feature-image {
+      background-image: url('/images/feature2.jpg'); /* ← Replace with your image URL */
+    }
+    .feature3 .feature-image {
+      background-image: url('/images/feature3.jpg'); /* ← Replace with your image URL */
+    }
+    .feature-content {
+      padding: 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .feature-content h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.25rem;
+    }
+    .feature-content p {
+      flex-grow: 1;
+      color: #555;
+      font-size: 0.95rem;
+    }
+    .feature-content a.read-more {
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #0d6efd; /* Bootstrap primary */
+    }
+    .feature-content a.read-more:hover {
+      text-decoration: underline;
+    }
+
+    /* SECONDARY SECTION */
+    .secondary {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+      overflow: hidden;
+    }
+    .secondary .secondary-image {
+      background-image: url('/images/secondary.jpg'); /* ← Replace with your image URL */
+      background-size: cover;
+      background-position: center;
+      height: 200px;
+    }
+    .secondary .secondary-content {
+      padding: 1rem;
+    }
+    .secondary .secondary-content h3 {
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+    .secondary .secondary-content p {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .secondary .sub-stories h4 {
+      margin: 1rem 0 0.5rem 0;
+      font-size: 1.1rem;
+    }
+    .secondary .sub-stories p {
+      margin: 0 0 0.75rem 0;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .sidebar h5 {
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar ul li {
+      margin-bottom: 0.5rem;
+    }
+    .sidebar .subscribe-btn {
+      margin-top: 0.5rem;
+    }
+
+    /* FOOTER */
+    footer.site-footer {
+      background-color: #f8f9fa;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      border-top: 1px solid #e0e0e0;
+    }
+    footer.site-footer a {
+      margin: 0 0.5rem;
+      color: #555;
+      font-weight: 500;
+    }
+    footer.site-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- ──────────────────────────────────────────────────────────────────────
+       HEADER / NAVBAR (Bootstrap 5)
+       ────────────────────────────────────────────────────────────────────── -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">O11Y</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Insights</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ──────────────────────────────────────────────────────────────────────
+       MAIN CONTENT (CSS GRID LAYOUT)
+       ────────────────────────────────────────────────────────────────────── -->
+  <main class="page-layout">
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="overlay-text">
+        What to do with all of those logs
+      </div>
+    </section>
+
+    <!-- FEATURE CARD 1 -->
+    <section class="feature1">
+      <div class="feature-card">
+        <div class="feature-image">
+          <!-- Background is set via CSS -->
+        </div>
+        <div class="feature-content">
+          <h3>Article Title 1</h3>
+          <p>— Teaser text…</p>
+          <a href="#" class="read-more">Read more →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE CARD 2 -->
+    <section class="feature2">
+      <div class="feature-card">
+        <div class="feature-image">
+          <!-- Background is set via CSS -->
+        </div>
+        <div class="feature-content">
+          <h3>Article Title 2</h3>
+          <p>— Teaser text…</p>
+          <a href="#" class="read-more">Read more →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE CARD 3 -->
+    <section class="feature3">
+      <div class="feature-card">
+        <div class="feature-image">
+          <!-- Background is set via CSS -->
+        </div>
+        <div class="feature-content">
+          <h3>Article Title 3</h3>
+          <p>— Teaser text…</p>
+          <a href="#" class="read-more">Read more →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECONDARY SECTION -->
+    <section class="secondary">
+      <div class="secondary-image">
+        <!-- Background is set via CSS -->
+      </div>
+      <div class="secondary-content">
+        <h3>Secondary Story Title</h3>
+        <p>— Brief description or teaser copy…</p>
+        <div class="sub-stories">
+          <h4>Another Sub-Story Title</h4>
+          <p>— Short description…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIDEBAR / HIGHLIGHTS -->
+    <aside class="sidebar">
+      <h5>Highlights</h5>
+      <ul class="ps-0">
+        <li><a href="#">Quick Link 1</a></li>
+        <li><a href="#">Quick Link 2</a></li>
+        <li><a href="#">Quick Link 3</a></li>
+      </ul>
+      <button class="btn btn-primary subscribe-btn">Subscribe</button>
+      <div class="social-icons">
+        <a href="#" class="me-2">Instagram</a>
+        <a href="#" class="me-2">Twitter</a>
+        <a href="#">Facebook</a>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ──────────────────────────────────────────────────────────────────────
+       FOOTER
+       ────────────────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <a href="#">About</a> |
+    <a href="#">Privacy</a> |
+    <a href="#">Terms</a> |
+    <a href="#">Instagram</a> |
+    <a href="#">Twitter</a> |
+    <a href="#">Contact</a><br>
+    © 2025 O11Y. All rights reserved.
+  </footer>
+
+  <!-- ──────────────────────────────────────────────────────────────────────
+       Bootstrap 5 JS Bundle (includes Popper)
+       ────────────────────────────────────────────────────────────────────── -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384‐QFktQDz3yAw1M/aDmOPVXNIOpgBr8/bagZV9qTanaKV+2eKuheF6yLmODeyQXmux"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>
